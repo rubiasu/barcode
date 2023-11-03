@@ -1,0 +1,12 @@
+{
+  "ids": [
+    {
+      "name": "John Smith",
+      "section": "Nowhere",
+      "barcode": "Long List of Numbers and Letters"
+    }
+  ],
+  "sections": [
+    "All"
+  ]
+}
