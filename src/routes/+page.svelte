@@ -78,7 +78,7 @@
     } 
 
     function saveBarcodes() {
-        const jsonData = JSON.stringify({ids: codes, flights: flights}, null, 2);
+        const jsonData = JSON.stringify({ids: codes, sections: flights}, null, 2);
         const blob = new Blob([jsonData], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
 
