@@ -4,9 +4,11 @@
     let adding = false;
     let removing = false;
     let newBarcode = '';
-    let newName = '';
+    let newLast = '';
+    let newFirst ='';
     let newSection = '';
     let filter = 'All';
+    let search = '';
 
     /**
 	 * @type {any[]}
@@ -24,10 +26,11 @@
     }
 
     function addBarcode() {
-        codes = [...codes, {"name": newName, "section": newSection, "barcode": newBarcode}]
+        codes = [...codes, {"last": newLast, "first": newFirst, "section": newSection, "barcode": newBarcode}]
         addFlight(newSection);
         newBarcode = '';
-        newName = '';
+        newLast = '';
+        newFirst = '';
         newSection = '';
         adding = false;
     }
@@ -87,10 +90,6 @@
         URL.revokeObjectURL(url);
     }
 
-    // function filterFlight() {
-    //     console.log(filter)
-    // }
-
     /**
 	 * @param {string} text
 	 */
@@ -100,6 +99,16 @@
         }, function(err) {
             console.log('Could not copy text', err);
         });
+    }
+
+    function demo() {
+        codes = [{
+        "last": "Doe",
+        "first": "John",
+        "section": "Nowhere",
+        "barcode": "Long List of Numbers and Letters"
+        }]
+        flights = ["All"]
     }
     
   </script>
@@ -115,6 +124,8 @@
                 <option value={flight}>{flight}</option>
         {/each}
     </select>
+    {:else}
+    <button on:click={demo}>Demo</button>
   {/if}
   <section>
     {#if codes.length == 0}
@@ -128,7 +139,7 @@
                     {:else}
                         <Barcode barcodeValue=' ' />
                     {/if}
-                    <h2>{code.name}</h2>
+                    <h2>{code.last}, {code.first}</h2>
                     {#if removing}
                         <button on:click={() => {codes.splice(index, 1); removing = false;}}>Remove</button>
                     {:else}
@@ -144,8 +155,10 @@
     <aside>
         <label for="barcode">Enter Barcode</label>
         <input id="barcode" bind:value={newBarcode} placeholder="Enter Barcode">
-        <label for="name">Enter Name</label>
-        <input id="name" bind:value={newName} placeholder="Enter Name">
+        <label for="last">Enter Last Name</label>
+        <input id="last" bind:value={newLast} placeholder="Enter Last Name">
+        <label for="first">Enter First Name</label>
+        <input id="first" bind:value={newFirst} placeholder="Enter First Name">
         <label for="section">Enter Section</label>
         <input id="section" list="flights" bind:value={newSection} placeholder="Enter Section">
         <datalist id="flights">

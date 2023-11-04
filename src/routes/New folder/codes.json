@@ -1,7 +1,8 @@
 {
   "ids": [
     {
-      "name": "John Smith",
+      "last": "Doe",
+      "first": "John",
       "section": "Nowhere",
       "barcode": "Long List of Numbers and Letters"
     }
