@@ -110,6 +110,14 @@
         }]
         flights = ["All"]
     }
+
+    /**
+	 * @param {number} index
+	 */
+    function removeBarcode(index) {
+        codes = codes.filter((_, i) => i !== index);
+        removing = false;
+    }
     
   </script>
 
@@ -141,7 +149,7 @@
                     {/if}
                     <h2>{code.last}, {code.first}</h2>
                     {#if removing}
-                        <button on:click={() => {codes.splice(index, 1); removing = false;}}>Remove</button>
+                        <button on:click={() => removeBarcode(index)}>Remove</button>
                     {:else}
                         <button on:click={() => copyBarcode(code.barcode)}>Copy</button>
                     {/if}
