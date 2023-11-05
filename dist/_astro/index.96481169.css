@@ -1,0 +1,1 @@
+section.svelte-3az9mf{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:auto;gap:1rem;max-width:100dvw}div.svelte-3az9mf{display:flex;flex-direction:column;align-items:center;grid-column:span 4}@media (max-width: 1200px){div.svelte-3az9mf{grid-column:span 6}}@media (max-width: 800px){div.svelte-3az9mf{grid-column:span 12}}
