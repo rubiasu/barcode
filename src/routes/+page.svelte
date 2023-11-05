@@ -185,7 +185,7 @@
         <input id="section" list="flights" bind:value={newSection} placeholder="Enter Section">
         <datalist id="flights">
             {#each flights as flight}
-                <option value="flight">{flight}</option>
+                <option value={flight}>{flight}</option>
             {/each}
         </datalist>
         <button on:click={addBarcode}>Submit</button>
