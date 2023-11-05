@@ -8,7 +8,9 @@
     let newFirst ='';
     let newSection = '';
     let filter = 'All';
-    let search = '';
+    let editing = false;
+    let editingIndex = -1; // Index of the barcode being edited
+
 
     /**
 	 * @type {any[]}
@@ -20,10 +22,6 @@
      */
     let flights = [];
 
-
-    function enterBarcode() {
-        adding = true;
-    }
 
     function addBarcode() {
         codes = [...codes, {"last": newLast, "first": newFirst, "section": newSection, "barcode": newBarcode}]
@@ -117,6 +115,38 @@
     /**
 	 * @param {number} index
 	 */
+    function editBarcode(index) {
+        editing = true;
+        adding = false; // Ensure we're not in adding mode
+        editingIndex = index;
+
+        // Populate form with current values
+        newBarcode = codes[index].barcode;
+        newLast = codes[index].last;
+        newFirst = codes[index].first;
+        newSection = codes[index].section;
+    }
+
+    function updateBarcode() {
+        if (editingIndex >= 0) {
+            codes[editingIndex] = {"last": newLast, "first": newFirst, "section": newSection, "barcode": newBarcode};
+            sortBarcodes(); // Sort the barcodes after editing
+            editing = false;
+            editingIndex = -1;
+
+            // Clear form
+            newBarcode = '';
+            newLast = '';
+            newFirst = '';
+            newSection = '';
+        }
+    }
+
+
+
+    /**
+	 * @param {number} index
+	 */
     function removeBarcode(index) {
         codes = codes.filter((_, i) => i !== index);
         removing = false;
@@ -138,8 +168,9 @@
   <input type="file" accept=".json" on:change={loadBarcodes}/>
   {#if codes.length > 0}
     <button on:click={saveBarcodes}>Save Barcodes</button>
-    <button on:click={enterBarcode}>Add Barcode</button>
+    <button on:click={() => adding = !adding}>Add Barcode</button>
     <button on:click={() => removing = !removing}>Remove Barcode</button>
+    <button on:click={() => editing = !editing}>Update Entry</button>
     <label for="filter">Filter by section</label>
     <select id="filter" bind:value={filter}>
         {#each flights as flight}
@@ -164,16 +195,19 @@
                     <h2>{code.last}, {code.first}</h2>
                     {#if removing}
                         <button on:click={() => removeBarcode(index)}>Remove</button>
+                    {:else if editing}
+                        <button on:click={() => editBarcode(index)}>Edit</button>
                     {:else}
                         <button on:click={() => copyBarcode(code.barcode)}>Copy</button>
                     {/if}
+                    
                 </div>
             {/if}
         {/each}
     {/if}
 </section>
 
-{#if adding}
+{#if adding || editing}
     <aside>
         <label for="barcode">Enter Barcode</label>
         <input id="barcode" bind:value={newBarcode} placeholder="Enter Barcode">
@@ -188,9 +222,14 @@
                 <option value={flight}>{flight}</option>
             {/each}
         </datalist>
-        <button on:click={addBarcode}>Submit</button>
+        <button on:click={adding ? addBarcode : updateBarcode}>
+            {#if adding}Submit{:else if editing}Update{/if}
+        </button>
+        <button on:click={()=> {adding = false; editing = false}}>Cancel</button>
     </aside>
 {/if}
+
+
 
   <style>
     section {
