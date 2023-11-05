@@ -33,6 +33,8 @@
         newFirst = '';
         newSection = '';
         adding = false;
+        sortBarcodes();
+        console.log('sort')
     }
 
     /**
@@ -42,6 +44,7 @@
         if (!flights.includes(newFlight)) {
             flights = [...flights, newFlight];
         }
+        flights.sort();
     }
 
     
@@ -117,6 +120,17 @@
     function removeBarcode(index) {
         codes = codes.filter((_, i) => i !== index);
         removing = false;
+    }
+
+    function sortBarcodes() {
+        codes.sort((a, b) => {
+            // Compare by last name
+            if (a.last < b.last) return -1;
+            if (a.last > b.last) return 1;
+            
+            // If last names are equal, compare by first name
+            return a.first.localeCompare(b.first);
+        });
     }
     
   </script>
