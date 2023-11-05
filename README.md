@@ -22,24 +22,18 @@ This project is a barcode management application built with Svelte. It allows us
 
 1. Clone the repository:
    ```
-   {
     git clone https://github.com/rubiasu/barcode.git
-   }
    ```
 2. Navigate to the project directory:
 
     ```
-    {
         cd your-repo-name
-    }
     ```
 
 3. Install dependencies:
 
     ```
-    {
         npm install
-    }
     ```
 
 ### Running the Application
@@ -47,9 +41,7 @@ This project is a barcode management application built with Svelte. It allows us
 1. Start the development server:
 
     ```
-    {
         npm run dev
-    }
     ```
 
 2. Visit http://localhost:5173 in your web browser.
